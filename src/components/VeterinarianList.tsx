@@ -7,6 +7,7 @@ import VeterinarianMap from "./VeterinarianMap";
 
 interface VeterinarianListProps {
   onSelectVet: (vetId: string) => void;
+  onBack: () => void;
 }
 
 // Mock data for veterinarians
@@ -52,7 +53,7 @@ const mockVeterinarians = [
   },
 ];
 
-const VeterinarianList = ({ onSelectVet }: VeterinarianListProps) => {
+const VeterinarianList = ({ onSelectVet, onBack }: VeterinarianListProps) => {
   const [searchRadius, setSearchRadius] = useState(2);
   const { toast } = useToast();
 
@@ -69,7 +70,7 @@ const VeterinarianList = ({ onSelectVet }: VeterinarianListProps) => {
       <div className="container mx-auto px-4 max-w-6xl">
         {/* Header */}
         <div className="mb-8 space-y-4">
-          <Button variant="ghost" className="mb-4">
+          <Button variant="ghost" onClick={onBack} className="mb-4">
             <ArrowLeft className="w-4 h-4 mr-2" />
             Volver
           </Button>
@@ -91,9 +92,9 @@ const VeterinarianList = ({ onSelectVet }: VeterinarianListProps) => {
         </div>
 
         {/* Interactive Map */}
-        <div className="mb-8">
+        {/* <div className="mb-8">
           <VeterinarianMap />
-        </div>
+        </div> */}
 
         {/* Veterinarian Cards */}
         <div className="space-y-6">

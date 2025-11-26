@@ -10,6 +10,7 @@ const Index = () => {
   const [showEmergencyModal, setShowEmergencyModal] = useState(false);
   const [emergencyActive, setEmergencyActive] = useState(false);
   const [selectedVet, setSelectedVet] = useState<string | null>(null);
+  const [mainPage, setMainPage] = useState<string | null>(null);
 
   const handleEmergencyRequest = (description: string, petInfo: any) => {
     console.log("Emergency requested:", description, petInfo);
@@ -19,12 +20,19 @@ const Index = () => {
 
   const handleVetSelect = (vetId: string) => {
     setSelectedVet(vetId);
+    setMainPage(vetId);
   };
 
   if (emergencyActive && !selectedVet) {
     return (
       <div className="min-h-screen bg-gradient-to-br from-background via-muted/30 to-background">
-        <VeterinarianList onSelectVet={handleVetSelect} />
+        <VeterinarianList
+          onSelectVet={handleVetSelect}
+          onBack={() => {
+            setEmergencyActive(false);
+            setSelectedVet(null);
+          }}
+        />
       </div>
     );
   }
@@ -32,7 +40,12 @@ const Index = () => {
   if (selectedVet) {
     return (
       <div className="min-h-screen bg-gradient-to-br from-background via-muted/30 to-background">
-        <AIAssistantChat vetId={selectedVet} onBack={() => setSelectedVet(null)} />
+        <AIAssistantChat
+          vetId={selectedVet}
+          onBack={() => {
+            setSelectedVet(null);
+          }}
+        />
       </div>
     );
   }
@@ -80,13 +93,13 @@ const Index = () => {
                 <Phone className="w-5 h-5 mr-2" />
                 Solicitar Ayuda de Emergencia
               </Button>
-              <Button 
+              {/* <Button 
                 variant="outline" 
                 className="border-2 border-primary text-primary hover:bg-primary hover:text-primary-foreground text-lg px-8 py-6 rounded-xl font-semibold transition-all duration-300 hover:scale-105"
               >
                 <MapPin className="w-5 h-5 mr-2" />
                 Ver Veterinarios Cercanos
-              </Button>
+              </Button> */}
             </div>
 
             {/* Trust Indicators */}
